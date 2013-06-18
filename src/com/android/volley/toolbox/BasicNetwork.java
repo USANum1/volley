@@ -106,7 +106,8 @@ public class BasicNetwork implements Network {
                 long requestLifetime = SystemClock.elapsedRealtime() - requestStart;
                 logSlowRequests(requestLifetime, request, responseContents, statusLine);
 
-                if (!(request instanceof JsonRequest) && statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_NO_CONTENT) {
+                boolean isServerError = (statusCode / 100 == 5);
+                if (isServerError || (!(request instanceof JsonRequest) && statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_NO_CONTENT)) {
                     throw new IOException();
                 }
                 return new NetworkResponse(statusCode, responseContents, responseHeaders, false);
