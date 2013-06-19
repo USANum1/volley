@@ -88,7 +88,7 @@ public class BasicNetwork implements Network {
             Map<String, String> responseHeaders = new HashMap<String, String>();
             try {
                 // Gather headers.
-                Map<String, String> headers = new HashMap<String, String>();
+                Map<String, String> headers = request.getHeaders();
                 addCacheHeaders(headers, request.getCacheEntry());
                 httpResponse = mHttpStack.performRequest(request, headers);
                 StatusLine statusLine = httpResponse.getStatusLine();
